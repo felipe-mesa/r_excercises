@@ -1,0 +1,71 @@
+---
+title: "Visualizing Chipotle's Data - Solutions"
+output: html_document
+---
+
+This time we are going to pull data directly from the internet.
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv).
+
+### Step 3. Assign it to a variable called chipo.
+
+```{r}
+url <- "https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv"
+
+chipo <- read_tsv(url, na = c("", "NA", "NULL"))
+```
+
+### Step 4. See the first 10 entries
+
+```{r}
+head(chipo, 10)
+```
+
+### Step 5. Create a histogram of the top 5 items bought
+
+```{r}
+# count how many times each item appears and keep the top 5
+top5 <- chipo |>
+  count(item_name, sort = TRUE) |>
+  head(5)
+
+# create the plot
+ggplot(top5, aes(x = reorder(item_name, n), y = n)) +
+  geom_col() +
+  # set the title and labels
+  labs(x = "Items", y = "Number of Times Ordered",
+       title = "Most ordered Chipotle's Items")
+```
+
+### Step 6. Create a scatterplot with the number of items orderered per order price
+
+#### Hint: Price should be in the X-axis and Items ordered in the Y-axis
+
+```{r}
+# strip the dollar sign and convert the price to a number
+chipo <- chipo |> mutate(item_price = as.numeric(str_remove(item_price, fixed("$"))))
+
+# then group by the orders and sum
+orders <- chipo |>
+  group_by(order_id) |>
+  summarise(item_price = sum(item_price), quantity = sum(quantity))
+
+# create the scatterplot
+ggplot(orders, aes(x = item_price, y = quantity)) +
+  geom_point(size = 3, color = "green") +
+  expand_limits(y = 0) +
+  labs(x = "Order Price", y = "Items ordered",
+       title = "Number of items ordered per order price")
+```
+
+### Step 7. BONUS: Create a question and a graph to answer your own question.

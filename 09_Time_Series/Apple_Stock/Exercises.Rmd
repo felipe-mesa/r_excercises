@@ -1,0 +1,78 @@
+---
+title: "Apple Stock"
+output: html_document
+---
+
+### Introduction:
+
+We are going to use Apple's stock price.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/09_Time_Series/Apple_Stock/appl_1980_2014.csv)
+
+### Step 3. Assign it to a variable apple
+
+```{r}
+
+```
+
+### Step 4. Check out the type of the columns
+
+```{r}
+
+```
+
+### Step 5. Transform the Date column as a date type
+
+```{r}
+
+```
+
+### Step 6. Set the date as the index
+
+```{r}
+
+```
+
+### Step 7. Is there any duplicate dates?
+
+```{r}
+
+```
+
+### Step 8. Ops...it seems the data is ordered from the most recent date. Make the first entry the oldest date.
+
+```{r}
+
+```
+
+### Step 9. Get the last business day of each month
+
+```{r}
+
+```
+
+### Step 10. What is the difference in days between the first day and the oldest
+
+```{r}
+
+```
+
+### Step 11. How many months in the data we have?
+
+```{r}
+
+```
+
+### Step 12. Plot the 'Adj Close' value. Set the size of the figure to 13.5 x 9 inches
+
+```{r fig.width=13.5, fig.height=9}
+
+```
+
+### BONUS: Create your own question and answer it.

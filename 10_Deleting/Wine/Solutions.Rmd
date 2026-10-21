@@ -1,0 +1,131 @@
+---
+title: "Wine - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+This exercise is a adaptation from the UCI Wine dataset.
+The only pupose is to practice deleting data with R.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+```
+
+### Step 2. Import the dataset from this [address](https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data).
+
+### Step 3. Assign it to a variable called wine
+
+```{r}
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+
+# the file has no header row: col_names = FALSE keeps the first row as data
+wine <- read_csv(url, col_names = FALSE)
+
+head(wine)
+```
+
+### Step 4. Delete the first, fourth, seventh, nineth, eleventh, thirteenth and fourteenth columns
+
+```{r}
+wine <- wine |> select(-c(1, 4, 7, 9, 11, 13, 14))
+
+head(wine)
+```
+
+### Step 5. Assign the columns as below:
+
+The attributes are (donated by Riccardo Leardi, riclea '@' anchem.unige.it):
+1) alcohol
+2) malic_acid
+3) alcalinity_of_ash
+4) magnesium
+5) flavanoids
+6) proanthocyanins
+7) hue
+
+```{r}
+names(wine) <- c("alcohol", "malic_acid", "alcalinity_of_ash", "magnesium",
+                 "flavanoids", "proanthocyanins", "hue")
+head(wine)
+```
+
+### Step 6. Set the values of the first 3 rows from alcohol as NA
+
+```{r}
+wine$alcohol[1:3] <- NA
+head(wine)
+```
+
+### Step 7. Now set the value of the rows 3 and 4 of magnesium as NA
+
+```{r}
+wine$magnesium[3:4] <- NA
+head(wine)
+```
+
+### Step 8. Fill the value of NA with the number 10 in alcohol and 100 in magnesium
+
+```{r}
+wine <- wine |> replace_na(list(alcohol = 10, magnesium = 100))
+
+head(wine)
+```
+
+### Step 9. Count the number of missing values
+
+```{r}
+colSums(is.na(wine))
+```
+
+### Step 10. Create an array of 10 random numbers up until 10
+
+```{r}
+random <- sample(1:10, size = 10, replace = TRUE)
+random
+```
+
+### Step 11. Use random numbers you generated as an index and assign NA value to each of cell.
+
+```{r}
+wine$alcohol[random] <- NA
+head(wine, 10)
+```
+
+### Step 12. How many missing values do we have?
+
+```{r}
+colSums(is.na(wine))
+```
+
+### Step 13. Delete the rows that contain missing values
+
+```{r}
+wine <- wine |> drop_na()
+head(wine)
+```
+
+### Step 14. Print only the non-null values in alcohol
+
+```{r}
+mask <- !is.na(wine$alcohol)
+head(mask)
+```
+
+```{r}
+wine$alcohol[mask]
+```
+
+### Step 15. Reset the index, so it starts with 1 again
+
+```{r}
+# tibbles are always numbered from 1 to n, so there is nothing to reset.
+# With a base data.frame you would use: rownames(wine) <- NULL
+head(wine)
+```
+
+### BONUS: Create your own question and answer it.

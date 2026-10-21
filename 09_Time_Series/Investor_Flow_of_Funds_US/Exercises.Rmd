@@ -1,0 +1,69 @@
+---
+title: "Investor - Flow of Funds - US"
+output: html_document
+---
+
+### Introduction:
+
+Special thanks to: https://github.com/rgrp for sharing the dataset.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/datasets/investor-flow-of-funds-us/f9258c2703085a686c330f2d0a0b41c818a9b112/data/weekly.csv).
+
+(The current version of that dataset has changed; this link points to the 2015 version used by the exercise.
+The same file is also included in this folder as `weekly.csv`.)
+
+### Step 3. Assign it to a variable called df
+
+```{r}
+
+```
+
+### Step 4. What is the frequency of the dataset?
+
+```{r}
+
+```
+
+### Step 5. Set the column Date as the index.
+
+```{r}
+
+```
+
+### Step 6. What is the type of the index?
+
+```{r}
+
+```
+
+### Step 7. Set the index to a Date type
+
+```{r}
+
+```
+
+### Step 8. Change the frequency to monthly, sum the values and assign it to monthly.
+
+```{r}
+
+```
+
+### Step 9. You will notice that it filled the dataFrame with months that don't have any data with NA. Let's drop these rows.
+
+```{r}
+
+```
+
+### Step 10. Good, now we have the monthly data. Now change the frequency to year.
+
+```{r}
+
+```
+
+### BONUS: Create your own question and answer it.

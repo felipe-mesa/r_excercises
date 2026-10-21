@@ -1,0 +1,80 @@
+---
+title: "Iris"
+output: html_document
+---
+
+### Introduction:
+
+This exercise may seem a little bit strange, but keep doing it.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data).
+
+### Step 3. Assign it to a variable called iris
+
+```{r}
+
+```
+
+### Step 4. Create columns for the dataset
+
+The columns are:
+
+1. sepal_length (in cm)
+2. sepal_width (in cm)
+3. petal_length (in cm)
+4. petal_width (in cm)
+5. class
+
+```{r}
+
+```
+
+### Step 5. Is there any missing value in the dataframe?
+
+```{r}
+
+```
+
+### Step 6. Lets set the values of the rows 10 to 29 of the column 'petal_length' to NA
+
+```{r}
+
+```
+
+### Step 7. Good, now lets substitute the NA values to 1.0
+
+```{r}
+
+```
+
+### Step 8. Now let's delete the column class
+
+```{r}
+
+```
+
+### Step 9. Set the first 3 rows as NA
+
+```{r}
+
+```
+
+### Step 10. Delete the rows that have NA
+
+```{r}
+
+```
+
+### Step 11. Reset the index so it begins with 1 again
+
+```{r}
+
+```
+
+### BONUS: Create your own question and answer it.

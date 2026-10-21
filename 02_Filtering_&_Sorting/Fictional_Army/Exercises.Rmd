@@ -1,0 +1,137 @@
+---
+title: "Fictional Army - Filtering and Sorting"
+output: html_document
+---
+
+### Introduction:
+
+This exercise was inspired by this [page](http://chrisalbon.com/python/)
+
+Special thanks to: https://github.com/chrisalbon for sharing the dataset and materials.
+
+In R, the closest thing to the pandas index is the **row names** of a base `data.frame`
+(tibbles do not keep row names). In this exercise we use row names together with
+`[rows, columns]` indexing, which works like `.loc` (with names) and `.iloc` (with positions).
+Remember that R counts positions from 1, not from 0.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. This is the data given as a list
+
+```{r given-data}
+# Create an example dataset about a fictional army
+raw_data <- list(
+  regiment = c("Nighthawks", "Nighthawks", "Nighthawks", "Nighthawks", "Dragoons", "Dragoons", "Dragoons", "Dragoons", "Scouts", "Scouts", "Scouts", "Scouts"),
+  company = c("1st", "1st", "2nd", "2nd", "1st", "1st", "2nd", "2nd", "1st", "1st", "2nd", "2nd"),
+  deaths = c(523, 52, 25, 616, 43, 234, 523, 62, 62, 73, 37, 35),
+  battles = c(5, 42, 2, 2, 4, 7, 8, 3, 4, 7, 8, 9),
+  size = c(1045, 957, 1099, 1400, 1592, 1006, 987, 849, 973, 1005, 1099, 1523),
+  veterans = c(1, 5, 62, 26, 73, 37, 949, 48, 48, 435, 63, 345),
+  readiness = c(1, 2, 3, 3, 2, 1, 2, 3, 2, 1, 2, 3),
+  armored = c(1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1),
+  deserters = c(4, 24, 31, 2, 3, 4, 24, 31, 2, 3, 2, 3),
+  origin = c("Arizona", "California", "Texas", "Florida", "Maine", "Iowa", "Alaska", "Washington", "Oregon", "Wyoming", "Louisana", "Georgia")
+)
+```
+
+### Step 3. Create a dataframe and assign it to a variable called army.
+
+#### Don't forget to keep the columns in the order presented in the list ('regiment', 'company', 'deaths'...) so that the column order is consistent with the solutions.
+
+```{r}
+
+```
+
+### Step 4. Set the 'origin' colum as the index (row names) of the dataframe
+
+```{r}
+
+```
+
+### Step 5. Print only the column veterans
+
+```{r}
+
+```
+
+### Step 6. Print the columns 'veterans' and 'deaths'
+
+```{r}
+
+```
+
+### Step 7. Print the name of all the columns.
+
+```{r}
+
+```
+
+### Step 8. Select the 'deaths', 'size' and 'deserters' columns from Maine and Alaska
+
+```{r}
+
+```
+
+### Step 9. Select the rows 3 to 7 and the columns 3 to 6
+
+```{r}
+
+```
+
+### Step 10. Select every row after the fourth row and all columns
+
+```{r}
+
+```
+
+### Step 11. Select every row up to the 4th row and all columns
+
+```{r}
+
+```
+
+### Step 12. Select the 3rd column up to the 7th column
+
+```{r}
+
+```
+
+### Step 13. Select rows where df.deaths is greater than 50
+
+```{r}
+
+```
+
+### Step 14. Select rows where df.deaths is greater than 500 or less than 50
+
+```{r}
+
+```
+
+### Step 15. Select all the regiments not named "Dragoons"
+
+```{r}
+
+```
+
+### Step 16. Select the rows called Texas and Arizona
+
+```{r}
+
+```
+
+### Step 17. Select the third cell in the row named Arizona
+
+```{r}
+
+```
+
+### Step 18. Select the third cell down in the column named deaths
+
+```{r}
+
+```

@@ -1,0 +1,94 @@
+---
+title: "Student Alcohol Consumption - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+This time you will download a dataset from the UCI.
+
+In pandas this exercise uses `apply()`; in R the same idea is covered by
+vectorised functions inside `mutate()`, `across()` and the `purrr::map()` family.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/04_Apply/Students_Alcohol_Consumption/student-mat.csv).
+
+### Step 3. Assign it to a variable called df.
+
+```{r}
+# the same file is also included in this folder: read_csv("student-mat.csv")
+csv_url <- "https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/04_Apply/Students_Alcohol_Consumption/student-mat.csv"
+df <- read_csv(csv_url)
+head(df)
+```
+
+### Step 4. For the purpose of this exercise slice the dataframe from 'school' until the 'guardian' column
+
+```{r}
+stud_alcoh <- df |> select(school:guardian)
+head(stud_alcoh)
+```
+
+### Step 5. Create a lambda function that will capitalize strings.
+
+```{r}
+# str_to_sentence() puts the first letter in upper case and the rest in lower case
+capitalizer <- \(x) str_to_sentence(x)
+```
+
+### Step 6. Capitalize both Mjob and Fjob
+
+```{r}
+capitalizer(stud_alcoh$Mjob) |> head()
+capitalizer(stud_alcoh$Fjob) |> head()
+```
+
+### Step 7. Print the last elements of the data set.
+
+```{r}
+tail(stud_alcoh)
+```
+
+### Step 8. Did you notice the original dataframe is still lowercase? Why is that? Fix it and capitalize Mjob and Fjob.
+
+```{r}
+# R never modifies an object "in place": the result has to be assigned back
+stud_alcoh <- stud_alcoh |> mutate(across(c(Mjob, Fjob), capitalizer))
+tail(stud_alcoh)
+```
+
+### Step 9. Create a function called majority that returns a boolean value to a new column called legal_drinker (Consider majority as older than 17 years old)
+
+```{r}
+majority <- function(x) {
+  x > 17
+}
+```
+
+```{r}
+stud_alcoh <- stud_alcoh |> mutate(legal_drinker = majority(age))
+head(stud_alcoh)
+```
+
+### Step 10. Multiply every number of the dataset by 10.
+
+##### I know this makes no sense, don't forget it is just an exercise
+
+```{r}
+times10 <- function(x) {
+  10 * x
+}
+```
+
+```{r}
+stud_alcoh |>
+  mutate(across(where(is.numeric), times10)) |>
+  head(10)
+```

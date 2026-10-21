@@ -1,0 +1,160 @@
+---
+title: "Ex2 - Getting and Knowing your Data (Chipotle) - Solutions"
+output: html_document
+---
+
+This time we are going to pull data directly from the internet.
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv).
+
+### Step 3. Assign it to a variable called chipo.
+
+```{r}
+url <- "https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv"
+
+# the file uses the text "NULL" for missing values in choice_description
+chipo <- read_tsv(url, na = c("", "NA", "NULL"))
+```
+
+### Step 4. See the first 10 entries
+
+```{r}
+head(chipo, 10)
+```
+
+### Step 5. What is the number of observations in the dataset?
+
+```{r}
+# Solution 1
+nrow(chipo)
+
+# Solution 2
+glimpse(chipo) # Rows: 4,622
+```
+
+### Step 6. What is the number of columns in the dataset?
+
+```{r}
+ncol(chipo)
+```
+
+### Step 7. Print the name of all the columns.
+
+```{r}
+names(chipo)
+```
+
+### Step 8. How is the dataset indexed?
+
+```{r}
+# tibbles have no index (row labels): rows are identified by their position, 1 to n
+seq_len(nrow(chipo)) |> range()
+```
+
+### Step 9. Which was the most-ordered item?
+
+```{r}
+chipo |>
+  group_by(item_name) |>
+  summarise(quantity = sum(quantity)) |>
+  arrange(desc(quantity)) |>
+  head(1)
+```
+
+### Step 10. For the most-ordered item, how many items were ordered?
+
+```{r}
+# count() with wt = quantity is a shortcut for group_by() + summarise(sum())
+chipo |>
+  count(item_name, wt = quantity, name = "quantity", sort = TRUE) |>
+  head(1)
+```
+
+### Step 11. What was the most ordered item in the choice_description column?
+
+```{r}
+chipo |>
+  filter(!is.na(choice_description)) |>
+  count(choice_description, wt = quantity, name = "quantity", sort = TRUE) |>
+  head(1)
+# Diet Coke 159
+```
+
+### Step 12. How many items were orderd in total?
+
+```{r}
+total_items_orders <- sum(chipo$quantity)
+total_items_orders
+```
+
+### Step 13. Turn the item price into a float
+
+#### Step 13.a. Check the item price type
+
+```{r}
+class(chipo$item_price)
+```
+
+#### Step 13.b. Create a lambda function and change the type of item price
+
+```{r}
+# \(x) is R's short syntax for an anonymous (lambda) function
+dollarizer <- \(x) as.numeric(str_remove(x, fixed("$")))
+
+chipo <- chipo |> mutate(item_price = dollarizer(item_price))
+```
+
+#### Step 13.c. Check the item price type
+
+```{r}
+class(chipo$item_price)
+```
+
+### Step 14. How much was the revenue for the period in the dataset?
+
+```{r}
+revenue <- sum(chipo$quantity * chipo$item_price)
+
+cat("Revenue was: $", round(revenue, 2), "\n", sep = "")
+```
+
+### Step 15. How many orders were made in the period?
+
+```{r}
+orders <- n_distinct(chipo$order_id)
+orders
+```
+
+### Step 16. What is the average revenue amount per order?
+
+```{r}
+# Solution 1
+chipo <- chipo |> mutate(revenue = quantity * item_price)
+
+order_grouped <- chipo |>
+  group_by(order_id) |>
+  summarise(revenue = sum(revenue))
+
+mean(order_grouped$revenue)
+
+# Solution 2
+chipo |>
+  summarise(revenue = sum(revenue), .by = order_id) |>
+  pull(revenue) |>
+  mean()
+```
+
+### Step 17. How many different items are sold?
+
+```{r}
+n_distinct(chipo$item_name)
+```

@@ -1,0 +1,59 @@
+---
+title: "Ex - GroupBy (Alcohol Consumption)"
+output: html_document
+---
+
+### Introduction:
+
+GroupBy can be summarized as Split-Apply-Combine. In dplyr this is
+`group_by()` + `summarise()`.
+
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+Check out this [Diagram](http://i.imgur.com/yjNkiwL.png)
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/drinks.csv).
+
+### Step 3. Assign it to a variable called drinks. (Watch the values of the column continent: NA means North America, and look at how R interprets it!)
+
+```{r}
+
+```
+
+### Step 4. Which continent drinks more beer on average?
+
+```{r}
+
+```
+
+### Step 5. For each continent print the statistics for wine consumption.
+
+```{r}
+
+```
+
+### Step 6. Print the mean alcohol consumption per continent for every column
+
+```{r}
+
+```
+
+### Step 7. Print the median alcohol consumption per continent for every column
+
+```{r}
+
+```
+
+### Step 8. Print the mean, min and max values for spirit consumption for each Continent.
+
+#### This time output a DataFrame
+
+```{r}
+
+```

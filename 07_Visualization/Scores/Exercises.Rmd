@@ -1,0 +1,51 @@
+---
+title: "Scores"
+output: html_document
+---
+
+### Introduction:
+
+This time you will create the data.
+
+***Exercise based on [Chris Albon](http://chrisalbon.com/) work, the credits belong to him.***
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Create the DataFrame with the data below. The columns should be in this order: first_name, last_name, age, female, preTestScore, postTestScore.
+
+```{r given-data}
+raw_data <- list(
+  first_name = c("Jason", "Molly", "Tina", "Jake", "Amy"),
+  last_name = c("Miller", "Jacobson", "Ali", "Milner", "Cooze"),
+  female = c(0, 1, 1, 0, 1),
+  age = c(42, 52, 36, 24, 73),
+  preTestScore = c(4, 24, 31, 2, 3),
+  postTestScore = c(25, 94, 57, 62, 70)
+)
+```
+
+```{r}
+
+```
+
+### Step 3. Create a Scatterplot of preTestScore and postTestScore, with the size of each point determined by age
+
+#### Hint: Don't forget to place the labels
+
+```{r}
+
+```
+
+### Step 4. Create a Scatterplot of preTestScore and postTestScore.
+
+### This time the size should be 4.5 times the postTestScore and the color determined by sex
+
+```{r}
+
+```
+
+### BONUS: Create your own question and answer it.

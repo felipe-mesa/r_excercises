@@ -1,0 +1,111 @@
+---
+title: "Tips - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+This exercise was created based on the tutorial and documentation from [Seaborn](https://stanford.edu/~mwaskom/software/seaborn/index.html)
+The dataset being used is tips from Seaborn. Here every plot is made with ggplot2.
+
+### Step 1. Import the necessary libraries:
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# set the ggplot2 style to white, without the right and upper borders
+theme_set(theme_classic())
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/07_Visualization/Tips/tips.csv).
+
+### Step 3. Assign it to a variable called tips
+
+```{r}
+# the same file is also included in this folder: read_csv("tips.csv")
+url <- "https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/07_Visualization/Tips/tips.csv"
+tips <- read_csv(url)
+
+head(tips)
+```
+
+### Step 4. Delete the first (unnamed) column
+
+```{r}
+# the first column has no name in the file, so readr calls it "...1"
+tips <- tips |> select(-1)
+
+head(tips)
+```
+
+### Step 5. Plot the total_bill column histogram
+
+```{r}
+# histogram with a density curve on top (like seaborn's distplot)
+ggplot(tips, aes(x = total_bill)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 20, fill = "steelblue", alpha = 0.6) +
+  geom_density() +
+  # set labels and titles
+  labs(x = "Value", y = "Frequency", title = "Total Bill")
+```
+
+### Step 6. Create a scatter plot presenting the relationship between total_bill and tip
+
+```{r}
+ggplot(tips, aes(x = total_bill, y = tip)) +
+  geom_point()
+```
+
+### Step 7. Create one image with the relationship of total_bill, tip and size.
+
+#### Hint: It is just one function.
+
+```{r}
+# pairs() draws a scatterplot for every pair of columns.
+# (GGally::ggpairs() is a ggplot2 alternative if you have GGally installed)
+pairs(tips[c("total_bill", "tip", "size")])
+```
+
+### Step 8. Present the relationship between days and total_bill value
+
+```{r}
+ggplot(tips, aes(x = day, y = total_bill)) +
+  geom_jitter(width = 0.1)
+```
+
+### Step 9. Create a scatter plot with the day as the y-axis and tip as the x-axis, differ the dots by sex
+
+```{r}
+ggplot(tips, aes(x = tip, y = day, color = sex)) +
+  geom_jitter(height = 0.1)
+```
+
+### Step 10. Create a box plot presenting the total_bill per day differentiating the time (Dinner or Lunch)
+
+```{r}
+ggplot(tips, aes(x = day, y = total_bill, fill = time)) +
+  geom_boxplot()
+```
+
+### Step 11. Create two histograms of the tip value based for Dinner and Lunch. They must be side by side.
+
+```{r}
+# facet_wrap() creates one panel per value of time
+ggplot(tips, aes(x = tip)) +
+  geom_histogram(bins = 10) +
+  facet_wrap(~ time)
+```
+
+### Step 12. Create two scatterplots graphs, one for Male and another for Female, presenting the total_bill value and tip relationship, differing by smoker or no smoker
+
+### They must be side by side.
+
+```{r}
+ggplot(tips, aes(x = total_bill, y = tip, color = smoker)) +
+  geom_point(alpha = 0.7) +
+  facet_wrap(~ sex)
+```
+
+### BONUS: Create your own question and answer it using a graph.

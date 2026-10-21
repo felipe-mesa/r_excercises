@@ -1,0 +1,87 @@
+---
+title: "Titanic Disaster - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+This exercise is based on the titanic Disaster dataset avaiable at [Kaggle](https://www.kaggle.com/c/titanic).
+To know more about the variables check [here](https://www.kaggle.com/c/titanic/data)
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/07_Visualization/Titanic_Disaster/train.csv)
+
+### Step 3. Assign it to a variable titanic
+
+```{r}
+# the same file is also included in this folder: read_csv("train.csv")
+url <- "https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/07_Visualization/Titanic_Disaster/train.csv"
+
+titanic <- read_csv(url)
+
+head(titanic)
+```
+
+### Step 4. Set PassengerId as the index
+
+```{r}
+# tibbles have no index; PassengerId is already the first column and identifies each row.
+# With a base data.frame you could use row names:
+tibble::column_to_rownames(titanic, "PassengerId") |> head()
+```
+
+### Step 5. Create a pie chart presenting the male/female proportion
+
+```{r}
+# count the instances of males and females
+proportions <- titanic |>
+  count(Sex) |>
+  mutate(percent = n / sum(n))
+
+# a pie chart in ggplot2 is a stacked bar in polar coordinates
+ggplot(proportions, aes(x = "", y = n, fill = Sex)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = 0) +
+  # with the percent listed in each slice
+  geom_text(aes(label = scales::percent(percent, accuracy = 0.1)),
+            position = position_stack(vjust = 0.5)) +
+  # with colors
+  scale_fill_manual(values = c(female = "red", male = "blue")) +
+  labs(title = "Sex Proportion", x = NULL, y = NULL) +
+  theme_void()
+```
+
+### Step 6. Create a scatterplot with the Fare payed and the Age, differ the plot color by gender
+
+```{r}
+ggplot(titanic, aes(x = Age, y = Fare, color = Sex)) +
+  geom_point(na.rm = TRUE) +
+  # set title
+  labs(title = "Fare x Age") +
+  coord_cartesian(xlim = c(-5, 85), ylim = c(-5, NA))
+```
+
+### Step 7. How many people survived?
+
+```{r}
+sum(titanic$Survived)
+```
+
+### Step 8. Create a histogram with the Fare payed
+
+```{r}
+# create bins of width 10, from 0 to 600
+ggplot(titanic, aes(x = Fare)) +
+  geom_histogram(breaks = seq(0, 600, 10)) +
+  # set the title and labels
+  labs(x = "Fare", y = "Frequency", title = "Fare Payed Histogram")
+```
+
+### BONUS: Create your own question and answer it.

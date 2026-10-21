@@ -1,0 +1,109 @@
+---
+title: "Apple Stock - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+We are going to use Apple's stock price.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/09_Time_Series/Apple_Stock/appl_1980_2014.csv)
+
+### Step 3. Assign it to a variable apple
+
+```{r}
+# the same file is also included in this folder: read_csv("appl_1980_2014.csv")
+url <- "https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/09_Time_Series/Apple_Stock/appl_1980_2014.csv"
+
+# col_types reads Date as text (and the rest as numbers) so that we convert the dates ourselves
+apple <- read_csv(url, col_types = cols(Date = col_character(), .default = col_double()))
+
+head(apple)
+```
+
+### Step 4. Check out the type of the columns
+
+```{r}
+sapply(apple, class)
+```
+
+### Step 5. Transform the Date column as a date type
+
+```{r}
+apple <- apple |> mutate(Date = ymd(Date))
+
+head(apple$Date)
+```
+
+### Step 6. Set the date as the index
+
+```{r}
+# tibbles have no index: we keep Date as the first column
+apple <- apple |> relocate(Date)
+
+head(apple)
+```
+
+### Step 7. Is there any duplicate dates?
+
+```{r}
+# NO! All are unique
+any(duplicated(apple$Date))
+```
+
+### Step 8. Ops...it seems the data is ordered from the most recent date. Make the first entry the oldest date.
+
+```{r}
+apple <- apple |> arrange(Date)
+head(apple)
+```
+
+### Step 9. Get the last business day of each month
+
+```{r}
+apple_month <- apple |>
+  group_by(month = floor_date(Date, "month")) |>
+  # the last day with data of each month is its last business (trading) day
+  filter(Date == max(Date)) |>
+  ungroup()
+
+head(apple_month)
+
+# if you want the mean of each month instead (like resample('BM').mean() in pandas):
+# apple |> group_by(month = floor_date(Date, "month")) |> summarise(across(-Date, mean))
+```
+
+### Step 10. What is the difference in days between the first day and the oldest
+
+```{r}
+as.numeric(max(apple$Date) - min(apple$Date))
+```
+
+### Step 11. How many months in the data we have?
+
+```{r}
+n_distinct(floor_date(apple$Date, "month"))
+```
+
+### Step 12. Plot the 'Adj Close' value. Set the size of the figure to 13.5 x 9 inches
+
+```{r fig.width=13.5, fig.height=9}
+# the size of the figure is set in the chunk options: fig.width and fig.height
+ggplot(apple, aes(x = Date, y = `Adj Close`)) +
+  geom_line() +
+  labs(title = "Apple Stock")
+
+# to save it to a file with that size:
+# ggsave("apple.png", width = 13.5, height = 9)
+```
+
+### BONUS: Create your own question and answer it.

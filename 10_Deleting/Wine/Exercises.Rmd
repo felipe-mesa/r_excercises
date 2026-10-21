@@ -1,0 +1,110 @@
+---
+title: "Wine"
+output: html_document
+---
+
+### Introduction:
+
+This exercise is a adaptation from the UCI Wine dataset.
+The only pupose is to practice deleting data with R.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data).
+
+### Step 3. Assign it to a variable called wine
+
+```{r}
+
+```
+
+### Step 4. Delete the first, fourth, seventh, nineth, eleventh, thirteenth and fourteenth columns
+
+```{r}
+
+```
+
+### Step 5. Assign the columns as below:
+
+The attributes are (donated by Riccardo Leardi, riclea '@' anchem.unige.it):
+1) alcohol
+2) malic_acid
+3) alcalinity_of_ash
+4) magnesium
+5) flavanoids
+6) proanthocyanins
+7) hue
+
+```{r}
+
+```
+
+### Step 6. Set the values of the first 3 rows from alcohol as NA
+
+```{r}
+
+```
+
+### Step 7. Now set the value of the rows 3 and 4 of magnesium as NA
+
+```{r}
+
+```
+
+### Step 8. Fill the value of NA with the number 10 in alcohol and 100 in magnesium
+
+```{r}
+
+```
+
+### Step 9. Count the number of missing values
+
+```{r}
+
+```
+
+### Step 10. Create an array of 10 random numbers up until 10
+
+```{r}
+
+```
+
+### Step 11. Use random numbers you generated as an index and assign NA value to each of cell.
+
+```{r}
+
+```
+
+### Step 12. How many missing values do we have?
+
+```{r}
+
+```
+
+### Step 13. Delete the rows that contain missing values
+
+```{r}
+
+```
+
+### Step 14. Print only the non-null values in alcohol
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Step 15. Reset the index, so it starts with 1 again
+
+```{r}
+
+```
+
+### BONUS: Create your own question and answer it.

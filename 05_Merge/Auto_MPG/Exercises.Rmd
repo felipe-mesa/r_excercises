@@ -1,0 +1,52 @@
+---
+title: "MPG Cars"
+output: html_document
+---
+
+### Introduction:
+
+The following exercise utilizes data from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG)
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the first dataset [cars1](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars1.csv) and [cars2](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars2.csv).
+
+### Step 3. Assign each to a variable called cars1 and cars2
+
+```{r}
+
+```
+
+### Step 4. Oops, it seems our first dataset has some unnamed blank columns, fix cars1
+
+```{r}
+
+```
+
+### Step 5. What is the number of observations in each dataset?
+
+```{r}
+
+```
+
+### Step 6. Join cars1 and cars2 into a single DataFrame called cars
+
+```{r}
+
+```
+
+### Step 7. Oops, there is a column missing, called owners. Create a random number vector from 15,000 to 73,000.
+
+```{r}
+
+```
+
+### Step 8. Add the column owners to cars
+
+```{r}
+
+```

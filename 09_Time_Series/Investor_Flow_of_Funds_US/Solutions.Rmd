@@ -1,0 +1,94 @@
+---
+title: "Investor - Flow of Funds - US - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+Special thanks to: https://github.com/rgrp for sharing the dataset.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/datasets/investor-flow-of-funds-us/f9258c2703085a686c330f2d0a0b41c818a9b112/data/weekly.csv).
+
+(The current version of that dataset has changed; this link points to the 2015 version used by the exercise.
+The same file is also included in this folder as `weekly.csv`.)
+
+### Step 3. Assign it to a variable called df
+
+```{r}
+url <- "https://raw.githubusercontent.com/datasets/investor-flow-of-funds-us/f9258c2703085a686c330f2d0a0b41c818a9b112/data/weekly.csv"
+
+# we read Date as text on purpose, to convert it ourselves later
+df <- read_csv(url, col_types = cols(Date = col_character(), .default = col_double()))
+head(df)
+```
+
+### Step 4. What is the frequency of the dataset?
+
+```{r}
+# weekly data: most consecutive dates are 7 days apart
+ymd(df$Date) |> diff() |> table()
+```
+
+### Step 5. Set the column Date as the index.
+
+```{r}
+# tibbles have no index: we keep Date as the first column
+df <- df |> relocate(Date)
+head(df)
+```
+
+### Step 6. What is the type of the index?
+
+```{r}
+class(df$Date)
+# it is a 'character' type
+```
+
+### Step 7. Set the index to a Date type
+
+```{r}
+df <- df |> mutate(Date = ymd(Date))
+class(df$Date)
+```
+
+### Step 8. Change the frequency to monthly, sum the values and assign it to monthly.
+
+```{r}
+monthly <- df |>
+  group_by(Date = floor_date(Date, "month")) |>
+  summarise(across(everything(), sum))
+
+# pandas' resample() also creates the months without data.
+# In R we can add them explicitly with complete():
+monthly <- monthly |>
+  complete(Date = seq(min(Date), max(Date), by = "month"))
+
+monthly
+```
+
+### Step 9. You will notice that it filled the dataFrame with months that don't have any data with NA. Let's drop these rows.
+
+```{r}
+monthly <- monthly |> drop_na()
+monthly
+```
+
+### Step 10. Good, now we have the monthly data. Now change the frequency to year.
+
+```{r}
+year <- monthly |>
+  group_by(Date = floor_date(Date, "year")) |>
+  summarise(across(everything(), sum))
+year
+```
+
+### BONUS: Create your own question and answer it.

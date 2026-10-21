@@ -1,0 +1,66 @@
+---
+title: "Ex1 - Getting and knowing your Data (World Food Facts)"
+output: html_document
+---
+
+### Step 1. Go to https://www.kaggle.com/openfoodfacts/world-food-facts/data
+
+### Step 2. Download the dataset to your computer and unzip it.
+
+```{r message=FALSE}
+
+```
+
+### Step 3. Use the tsv file and assign it to a dataframe called food
+
+```{r}
+
+```
+
+### Step 4. See the first 5 entries
+
+```{r}
+
+```
+
+### Step 5. What is the number of observations in the dataset?
+
+```{r}
+
+```
+
+### Step 6. What is the number of columns in the dataset?
+
+```{r}
+
+```
+
+### Step 7. Print the name of all the columns.
+
+```{r}
+
+```
+
+### Step 8. What is the name of 105th column?
+
+```{r}
+
+```
+
+### Step 9. What is the type of the observations of the 105th column?
+
+```{r}
+
+```
+
+### Step 10. How is the dataset indexed?
+
+```{r}
+
+```
+
+### Step 11. What is the product name of the 19th observation?
+
+```{r}
+
+```

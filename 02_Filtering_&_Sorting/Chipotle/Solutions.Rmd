@@ -1,0 +1,103 @@
+---
+title: "Ex1 - Filtering and Sorting Data (Chipotle) - Solutions"
+output: html_document
+---
+
+This time we are going to pull data directly from the internet.
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv).
+
+### Step 3. Assign it to a variable called chipo.
+
+```{r}
+url <- "https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv"
+
+chipo <- read_tsv(url, na = c("", "NA", "NULL"))
+```
+
+### Step 4. How many products cost more than $10.00?
+
+```{r}
+# the item price column is actually the price of the product multiplied by the quantity
+chipo |> filter(choice_description == "[Diet Coke]", item_name == "Canned Soda")
+```
+
+```{r}
+# adding a new column representing the price of each single product as a number
+chipo <- chipo |>
+  mutate(item_price = as.numeric(str_remove(item_price, fixed("$"))),
+         product_price = item_price / quantity)
+chipo
+```
+
+```{r}
+# checking everything is correct
+chipo |> filter(choice_description == "[Diet Coke]", item_name == "Canned Soda")
+```
+
+```{r}
+# removing duplicated products (distinct() keeps the first row of each combination)
+filtered_chipo <- chipo |> distinct(item_name, choice_description, .keep_all = TRUE)
+```
+
+```{r}
+# filtering products that cost more than $10
+filtered_chipo <- filtered_chipo |>
+  filter(product_price > 10) |>
+  select(item_name, choice_description, product_price)
+```
+
+```{r}
+cat("the number of products that cost more than $10.00 is", nrow(filtered_chipo), "\n")
+```
+
+### Step 5. What is the price of each item?
+
+###### print a data frame with only three columns item_name choice_description and product_price
+
+```{r}
+filtered_chipo |> select(item_name, choice_description, product_price)
+```
+
+### Step 6. Sort by the name of the item
+
+```{r}
+sort(chipo$item_name) |> head(10)
+
+# OR
+
+chipo |> arrange(item_name)
+```
+
+### Step 7. What was the quantity of the most expensive item ordered?
+
+```{r}
+chipo |>
+  slice_max(item_price, n = 1, with_ties = FALSE) |>
+  pull(quantity)
+```
+
+### Step 8. How many times was a Veggie Salad Bowl ordered?
+
+```{r}
+chipo |>
+  filter(item_name == "Veggie Salad Bowl") |>
+  summarise(times = sum(quantity))
+```
+
+### Step 9. How many times did someone order more than one Canned Soda?
+
+```{r}
+chipo |>
+  filter(item_name == "Canned Soda", quantity > 1) |>
+  nrow()
+```

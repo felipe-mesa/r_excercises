@@ -1,0 +1,71 @@
+---
+title: "MPG Cars - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+The following exercise utilizes data from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG)
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+```
+
+### Step 2. Import the first dataset [cars1](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars1.csv) and [cars2](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars2.csv).
+
+### Step 3. Assign each to a variable called cars1 and cars2
+
+```{r}
+# the same files are also included in this folder: read_csv("cars1.csv"), read_csv("cars2.csv")
+cars1 <- read_csv("https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars1.csv")
+cars2 <- read_csv("https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/05_Merge/Auto_MPG/cars2.csv")
+
+head(cars1)
+head(cars2)
+```
+
+### Step 4. Oops, it seems our first dataset has some unnamed blank columns, fix cars1
+
+```{r}
+cars1 <- cars1 |> select(mpg:car)
+head(cars1)
+```
+
+### Step 5. What is the number of observations in each dataset?
+
+```{r}
+dim(cars1)
+dim(cars2)
+```
+
+### Step 6. Join cars1 and cars2 into a single DataFrame called cars
+
+```{r}
+# horsepower contains "?" for missing values in cars1, so it was read as text.
+# bind_rows() needs the same type in both tables.
+class(cars1$horsepower)
+class(cars2$horsepower)
+
+cars <- bind_rows(
+  cars1 |> mutate(horsepower = as.character(horsepower)),
+  cars2 |> mutate(horsepower = as.character(horsepower))
+)
+cars
+```
+
+### Step 7. Oops, there is a column missing, called owners. Create a random number vector from 15,000 to 73,000.
+
+```{r}
+nr_owners <- sample(15000:73000, size = nrow(cars), replace = TRUE)
+head(nr_owners)
+```
+
+### Step 8. Add the column owners to cars
+
+```{r}
+cars <- cars |> mutate(owners = nr_owners)
+tail(cars)
+```

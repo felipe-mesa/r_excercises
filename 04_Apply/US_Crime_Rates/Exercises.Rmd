@@ -1,0 +1,62 @@
+---
+title: "United States - Crime Rates - 1960 - 2014"
+output: html_document
+---
+
+### Introduction:
+
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/04_Apply/US_Crime_Rates/US_Crime_Rates_1960_2014.csv).
+
+### Step 3. Assign it to a variable called crime.
+
+```{r}
+
+```
+
+### Step 4. What is the type of the columns?
+
+```{r}
+
+```
+
+##### Have you noticed that the type of Year is a number (dbl)? But R has a different type to work with dates. Let's see it now.
+
+### Step 5. Convert the type of the column Year to Date
+
+```{r}
+
+```
+
+### Step 6. Set the Year column as the index of the dataframe
+
+```{r}
+
+```
+
+### Step 7. Delete the Total column
+
+```{r}
+
+```
+
+### Step 8. Group the year by decades and sum the values
+
+#### Pay attention to the Population column number, summing this column is a mistake
+
+```{r}
+
+```
+
+### Step 9. What is the most dangerous decade to live in the US?
+
+```{r}
+
+```

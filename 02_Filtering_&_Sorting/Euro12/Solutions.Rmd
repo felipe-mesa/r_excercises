@@ -1,0 +1,103 @@
+---
+title: "Ex2 - Filtering and Sorting Data (Euro 2012) - Solutions"
+output: html_document
+---
+
+This time we are going to pull data directly from the internet.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/02_Filtering_%26_Sorting/Euro12/Euro_2012_stats_TEAM.csv).
+
+### Step 3. Assign it to a variable called euro12.
+
+```{r}
+# the same file is also included in this folder: read_csv("Euro_2012_stats_TEAM.csv")
+euro12 <- read_csv("https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/02_Filtering_%26_Sorting/Euro12/Euro_2012_stats_TEAM.csv")
+euro12
+```
+
+### Step 4. Select only the Goal column.
+
+```{r}
+euro12$Goals
+
+# or, keeping it as a tibble
+euro12 |> select(Goals)
+```
+
+### Step 5. How many team participated in the Euro2012?
+
+```{r}
+nrow(euro12)
+```
+
+### Step 6. What is the number of columns in the dataset?
+
+```{r}
+ncol(euro12)
+
+glimpse(euro12)
+```
+
+### Step 7. View only the columns Team, Yellow Cards and Red Cards and assign them to a dataframe called discipline
+
+```{r}
+# column names with spaces must be written between backticks
+discipline <- euro12 |> select(Team, `Yellow Cards`, `Red Cards`)
+discipline
+```
+
+### Step 8. Sort the teams by Red Cards, then to Yellow Cards
+
+```{r}
+discipline |> arrange(desc(`Red Cards`), desc(`Yellow Cards`))
+```
+
+### Step 9. Calculate the mean Yellow Cards given per Team
+
+```{r}
+round(mean(discipline$`Yellow Cards`))
+```
+
+### Step 10. Filter teams that scored more than 6 goals
+
+```{r}
+euro12 |> filter(Goals > 6)
+```
+
+### Step 11. Select the teams that start with G
+
+```{r}
+euro12 |> filter(str_starts(Team, "G"))
+```
+
+### Step 12. Select the first 7 columns
+
+```{r}
+# select() also accepts column positions
+euro12 |> select(1:7)
+```
+
+### Step 13. Select all columns except the last 3.
+
+```{r}
+euro12 |> select(1:(ncol(euro12) - 3))
+
+# or with base R
+# euro12[, 1:(ncol(euro12) - 3)]
+```
+
+### Step 14. Present only the Shooting Accuracy from England, Italy and Russia
+
+```{r}
+euro12 |>
+  filter(Team %in% c("England", "Italy", "Russia")) |>
+  select(Team, `Shooting Accuracy`)
+```

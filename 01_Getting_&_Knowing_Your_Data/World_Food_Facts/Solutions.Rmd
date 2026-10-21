@@ -1,0 +1,80 @@
+---
+title: "Ex1 - Getting and knowing your Data (World Food Facts) - Solutions"
+output: html_document
+---
+
+### Step 1. Go to https://www.kaggle.com/openfoodfacts/world-food-facts/data
+
+### Step 2. Download the dataset to your computer and unzip it.
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+```
+
+### Step 3. Use the tsv file and assign it to a dataframe called food
+
+```{r}
+# change the path to the place where you unzipped the file
+food <- read_tsv("~/Desktop/en.openfoodfacts.org.products.tsv",
+                 guess_max = 100000) # look at more rows to guess the column types
+```
+
+### Step 4. See the first 5 entries
+
+```{r}
+head(food, 5)
+```
+
+### Step 5. What is the number of observations in the dataset?
+
+```{r}
+dim(food)  # will give you both (observations/rows, columns)
+nrow(food) # will give you only the observations/rows number
+```
+
+### Step 6. What is the number of columns in the dataset?
+
+```{r}
+dim(food)  # will give you both (observations/rows, columns)
+ncol(food) # will give you only the columns number
+
+# OR
+
+glimpse(food) # Columns: 163
+```
+
+### Step 7. Print the name of all the columns.
+
+```{r}
+names(food)
+```
+
+### Step 8. What is the name of 105th column?
+
+```{r}
+# R counts from 1, so the 105th column is simply column 105
+names(food)[105]
+```
+
+### Step 9. What is the type of the observations of the 105th column?
+
+```{r}
+class(food[[105]])
+```
+
+### Step 10. How is the dataset indexed?
+
+```{r}
+# tibbles have no index: rows are identified by their position, 1 to n
+range(seq_len(nrow(food)))
+```
+
+### Step 11. What is the product name of the 19th observation?
+
+```{r}
+food$product_name[19]
+
+# or by position (product_name is the 8th column)
+food[[19, 8]]
+```

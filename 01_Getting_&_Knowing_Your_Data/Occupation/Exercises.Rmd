@@ -1,0 +1,111 @@
+---
+title: "Ex3 - Getting and Knowing your Data (Occupation)"
+output: html_document
+---
+
+This time we are going to pull data directly from the internet.
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/u.user).
+
+### Step 3. Assign it to a variable called users and use the 'user_id' as index
+
+```{r}
+
+```
+
+### Step 4. See the first 25 entries
+
+```{r}
+
+```
+
+### Step 5. See the last 10 entries
+
+```{r}
+
+```
+
+### Step 6. What is the number of observations in the dataset?
+
+```{r}
+
+```
+
+### Step 7. What is the number of columns in the dataset?
+
+```{r}
+
+```
+
+### Step 8. Print the name of all the columns.
+
+```{r}
+
+```
+
+### Step 9. How is the dataset indexed?
+
+```{r}
+
+```
+
+### Step 10. What is the data type of each column?
+
+```{r}
+
+```
+
+### Step 11. Print only the occupation column
+
+```{r}
+
+```
+
+### Step 12. How many different occupations are in this dataset?
+
+```{r}
+
+```
+
+### Step 13. What is the most frequent occupation?
+
+```{r}
+
+```
+
+### Step 14. Summarize the DataFrame.
+
+```{r}
+
+```
+
+### Step 15. Summarize all the columns
+
+```{r}
+
+```
+
+### Step 16. Summarize only the occupation column
+
+```{r}
+
+```
+
+### Step 17. What is the mean age of users?
+
+```{r}
+
+```
+
+### Step 18. What is the age with least occurrence?
+
+```{r}
+
+```

@@ -1,0 +1,92 @@
+---
+title: "United States - Crime Rates - 1960 - 2014 - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/04_Apply/US_Crime_Rates/US_Crime_Rates_1960_2014.csv).
+
+### Step 3. Assign it to a variable called crime.
+
+```{r}
+# the same file is also included in this folder: read_csv("US_Crime_Rates_1960_2014.csv")
+url <- "https://raw.githubusercontent.com/guipsamora/pandas_exercises/master/04_Apply/US_Crime_Rates/US_Crime_Rates_1960_2014.csv"
+crime <- read_csv(url)
+head(crime)
+```
+
+### Step 4. What is the type of the columns?
+
+```{r}
+glimpse(crime)
+```
+
+##### Have you noticed that the type of Year is a number (dbl)? But R has a different type to work with dates. Let's see it now.
+
+### Step 5. Convert the type of the column Year to Date
+
+```{r}
+crime <- crime |> mutate(Year = make_date(Year))
+glimpse(crime)
+```
+
+### Step 6. Set the Year column as the index of the dataframe
+
+```{r}
+# tibbles have no index: we keep Year as the first column and sort by it
+crime <- crime |>
+  relocate(Year) |>
+  arrange(Year)
+head(crime)
+```
+
+### Step 7. Delete the Total column
+
+```{r}
+crime <- crime |> select(-Total)
+head(crime)
+```
+
+### Step 8. Group the year by decades and sum the values
+
+#### Pay attention to the Population column number, summing this column is a mistake
+
+```{r}
+crimes <- crime |>
+  # floor_date() rounds every date down to the start of its decade
+  mutate(Decade = floor_date(Year, "10 years")) |>
+  group_by(Decade) |>
+  summarise(
+    # take the max value only for the "Population" column
+    Population = max(Population),
+    # and sum every other column
+    across(-c(Year, Population), sum)
+  )
+
+crimes
+```
+
+### Step 9. What is the most dangerous decade to live in the US?
+
+```{r}
+# for each column, the decade with the highest value
+crimes |>
+  pivot_longer(-Decade, names_to = "variable") |>
+  group_by(variable) |>
+  slice_max(value, n = 1) |>
+  select(variable, Decade)
+
+# apparently the 90s was a pretty dangerous time in the US
+```

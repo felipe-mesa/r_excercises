@@ -1,0 +1,52 @@
+---
+title: "Pokemon"
+output: html_document
+---
+
+### Introduction:
+
+This time you will create the data.
+
+### Step 1. Import the necessary libraries
+
+```{r message=FALSE}
+
+```
+
+### Step 2. Create a data list
+
+```{r given-data}
+raw_data <- list(
+  name = c("Bulbasaur", "Charmander", "Squirtle", "Caterpie"),
+  evolution = c("Ivysaur", "Charmeleon", "Wartortle", "Metapod"),
+  type = c("grass", "fire", "water", "bug"),
+  hp = c(45, 39, 44, 45),
+  pokedex = c("yes", "no", "yes", "no")
+)
+```
+
+### Step 3. Assign it to a variable called pokemon
+
+```{r}
+
+```
+
+### Step 4. Place the order of the columns as name, type, hp, evolution, pokedex
+
+```{r}
+
+```
+
+### Step 5. Add another column called place, and insert what you have in mind.
+
+```{r}
+
+```
+
+### Step 6. Present the type of each column
+
+```{r}
+
+```
+
+### BONUS: Create your own question and answer it.

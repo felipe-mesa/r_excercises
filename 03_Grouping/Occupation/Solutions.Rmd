@@ -1,0 +1,82 @@
+---
+title: "Occupation - Solutions"
+output: html_document
+---
+
+### Introduction:
+
+Special thanks to: https://github.com/justmarkham for sharing the dataset and materials.
+
+### Step 1. Import the necessary libraries
+
+```{r step1, message=FALSE}
+library(readr)
+library(dplyr)
+```
+
+### Step 2. Import the dataset from this [address](https://raw.githubusercontent.com/justmarkham/DAT8/master/data/u.user).
+
+### Step 3. Assign it to a variable called users.
+
+```{r}
+users <- read_delim("https://raw.githubusercontent.com/justmarkham/DAT8/master/data/u.user",
+                    delim = "|")
+head(users)
+```
+
+### Step 4. Discover what is the mean age per occupation
+
+```{r}
+users |>
+  group_by(occupation) |>
+  summarise(age = mean(age))
+```
+
+### Step 5. Discover the Male ratio per occupation and sort it from the most to the least
+
+```{r}
+# create a function
+gender_to_numeric <- function(x) {
+  if_else(x == "M", 1, 0)
+}
+
+# apply the function to the gender column and create a new column
+users <- users |> mutate(gender_n = gender_to_numeric(gender))
+
+users |>
+  group_by(occupation) |>
+  summarise(male_ratio = sum(gender_n) / n() * 100) |>
+  # sort to the most male
+  arrange(desc(male_ratio))
+
+# shorter: the mean of a logical vector is the proportion of TRUE values
+# users |> summarise(male_ratio = mean(gender == "M") * 100, .by = occupation)
+```
+
+### Step 6. For each occupation, calculate the minimum and maximum ages
+
+```{r}
+users |>
+  group_by(occupation) |>
+  summarise(min = min(age), max = max(age))
+```
+
+### Step 7. For each combination of occupation and gender, calculate the mean age
+
+```{r}
+users |>
+  group_by(occupation, gender) |>
+  summarise(age = mean(age), .groups = "drop")
+```
+
+### Step 8. For each occupation present the percentage of women and men
+
+```{r}
+# count each combination of occupation and gender
+users |>
+  count(occupation, gender) |>
+  # divide each count by the total of its occupation and multiply by 100
+  group_by(occupation) |>
+  mutate(percentage = n / sum(n) * 100) |>
+  ungroup()
+```
